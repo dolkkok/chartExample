@@ -1,18 +1,15 @@
 import { Component, OnInit, ElementRef, Injector } from '@angular/core';
-import {BaseChart} from '../base-chart/base-chart';
 import {SeriesType} from '../base-chart/options/common';
 import {Series} from '../base-chart/options/series';
-import {getBarChartBaseOption} from '../base-chart/bar-chart-base-option';
-
-declare const echarts: any;
+import {BaseChart} from '../base-chart/base-chart';
+import {getScatterChartBaseOption} from '../base-chart/scatter-chart-base-option';
 
 @Component({
-  selector: 'app-bar-chart',
-  templateUrl: './bar-chart.component.html',
-  styleUrls: ['./bar-chart.component.css']
+  selector: 'app-scatter-chart',
+  templateUrl: './scatter-chart.component.html',
+  styleUrls: ['./scatter-chart.component.css']
 })
-
-export class BarChartComponent extends BaseChart implements OnInit {
+export class ScatterChartComponent extends BaseChart implements OnInit {
   constructor(elementRef: ElementRef, injector: Injector) {
     super(elementRef, injector);
   }
@@ -21,18 +18,17 @@ export class BarChartComponent extends BaseChart implements OnInit {
     // 차트 element 초기화
     this.initChart('chartCanvas');
     // 차트  option 초기화
-    this.chartOption = getBarChartBaseOption();
+    this.chartOption = getScatterChartBaseOption();
     const series: Series = {
-      type: SeriesType.BAR,
+      type: SeriesType.SCATTER,
       name: 'test',
-      data: [1, 2, 3, 4, 5, 6, 7, 8]
+      data: [[0, 1], [41, 52], [48, 66], [10, 20], [50, 40]]
     };
 
     delete this.chartOption.brush;
     delete this.chartOption.toolbox;
 
     this.chartOption.series.push(series);
-    this.chartOption.xAxis[0].data = ['1', '2', '3', '4', '5', '6', '7', '8'];
     this.chartOption.legend.data = ['test'];
 
     // 차트 draw
